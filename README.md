@@ -154,10 +154,27 @@ altitude = 44330.0 * (1.0 - pow(pressao_atual / pressao_referencia, 1.0/5.255))
 ## Configurações Avançadas
 
 ### Precisão do SHT4x
-O sensor SHT4x suporta diferentes níveis de precisão:
-- `PRECISION_HIGH`: 10ms de conversão, máxima precisão
-- `PRECISION_MEDIUM`: 5ms de conversão, precisão média
-- `PRECISION_LOW`: 2ms de conversão, precisão básica
+Enumeração para selecionar o nível de precisão da medição. Os diferentes modos resultam em diferentes tempos de medição e consumo de energia.
+
+| Nível de Precisão | Comando I2C | Tempo de Medição (típico) |
+| :---------------- | :---------- | :------------------------------------- |
+| `PRECISION_HIGH`  | `0xFD`      | 8.3 ms (máx)                           |
+| `PRECISION_MEDIUM`| `0xF6`      | 4.5 ms (máx)                           |
+| `PRECISION_LOW`   | `0xE0`      | 1.6 ms (máx)                           |
+
+### `SHT4x_HeaterMode`
+
+Enumeração para ativar o aquecedor interno do sensor para remover condensação ou para outras aplicações, usado em ambiente umidos. Cada modo ativa o aquecedor por uma duração específica e com uma potência determinada.
+
+| Modo de Aquecedor         | Comando I2C | Potência (típica) | Duração do Aquecedor |
+| :------------------------ | :---------- | :----------------------------- | :--------------------------------- |
+| `HEATER_HIGH_1S`          | `0x39`      | 200 mW                         | 1 segundo                          |
+| `HEATER_HIGH_0_1S`        | `0x32`      | 200 mW                         | 0.1 segundo                        |
+| `HEATER_MEDIUM_1S`        | `0x2F`      | 110 mW                         | 1 segundo                          |
+| `HEATER_MEDIUM_0_1S`      | `0x24`      | 110 mW                         | 0.1 segundo                        |
+| `HEATER_LOW_1S`           | `0x1E`      | 20 mW                          | 1 segundo                          |
+| `HEATER_LOW_0_1S`         | `0x15`      | 20 mW                          | 0.1 segundo                        |
+
 
 ### Resolução do MS5637
 O sensor MS5637 suporta diferentes resoluções OSR:
